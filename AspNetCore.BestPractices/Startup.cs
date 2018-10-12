@@ -36,9 +36,16 @@ namespace AspNetCore.BestPractices
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<BloggingContext>
-                (options => options.UseSqlServer(connection));
+            //var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<BloggingContext>(options =>
+            {
+                try { options.UseSqlServer(Configuration.GetConnectionString("dbConnection")); }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
