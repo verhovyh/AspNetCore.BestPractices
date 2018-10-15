@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AspNetCore.BestPractices.Models;
 using Microsoft.EntityFrameworkCore;
+using AspNetCore.BestPractices.ApplicationCore.Interfaces;
+using AspNetCore.BestPractices.Infrastructure.Logging;
 
 namespace AspNetCore.BestPractices
 {
@@ -32,7 +34,7 @@ namespace AspNetCore.BestPractices
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -46,6 +48,8 @@ namespace AspNetCore.BestPractices
                 }
 
             });
+
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

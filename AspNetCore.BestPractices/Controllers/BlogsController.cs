@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AspNetCore.BestPractices.Models;
+using AspNetCore.BestPractices.ApplicationCore.Interfaces;
 
 namespace AspNetCore.BestPractices.Controllers
 {
     public class BlogsController : Controller
     {
         private readonly BloggingContext _context;
+        private readonly IAppLogger<BlogsController> _logger;
 
-        public BlogsController(BloggingContext context)
+        public BlogsController(BloggingContext context, IAppLogger<BlogsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Blogs
@@ -141,6 +144,7 @@ namespace AspNetCore.BestPractices.Controllers
             var blog = await _context.Blogs.FindAsync(id);
             _context.Blogs.Remove(blog);
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Log has been deleted..");
             return RedirectToAction(nameof(Index));
         }
 
