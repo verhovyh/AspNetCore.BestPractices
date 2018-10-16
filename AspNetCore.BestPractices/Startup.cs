@@ -13,6 +13,7 @@ using AspNetCore.BestPractices.Models;
 using Microsoft.EntityFrameworkCore;
 using AspNetCore.BestPractices.ApplicationCore.Interfaces;
 using AspNetCore.BestPractices.Infrastructure.Logging;
+using AspNetCore.BestPractices.Infrastructure.Data;
 
 namespace AspNetCore.BestPractices
 {
