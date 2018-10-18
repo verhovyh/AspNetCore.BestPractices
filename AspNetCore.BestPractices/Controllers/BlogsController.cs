@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AspNetCore.BestPractices.Models;
 using AspNetCore.BestPractices.ApplicationCore.Interfaces;
+using AspNetCore.BestPractices.Infrastructure.Data;
+using AspNetCore.BestPractices.ApplicationCore.Entities;
 
 namespace AspNetCore.BestPractices.Controllers
 {
@@ -36,7 +38,7 @@ namespace AspNetCore.BestPractices.Controllers
             }
 
             var blog = await _context.Blogs
-                .FirstOrDefaultAsync(m => m.BlogId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (blog == null)
             {
                 return NotFound();
@@ -88,9 +90,9 @@ namespace AspNetCore.BestPractices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlogId,Url")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Url")] Blog blog)
         {
-            if (id != blog.BlogId)
+            if (id != blog.Id)
             {
                 return NotFound();
             }
@@ -104,7 +106,7 @@ namespace AspNetCore.BestPractices.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BlogExists(blog.BlogId))
+                    if (!BlogExists(blog.Id))
                     {
                         return NotFound();
                     }
@@ -127,7 +129,7 @@ namespace AspNetCore.BestPractices.Controllers
             }
 
             var blog = await _context.Blogs
-                .FirstOrDefaultAsync(m => m.BlogId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (blog == null)
             {
                 return NotFound();
@@ -150,7 +152,7 @@ namespace AspNetCore.BestPractices.Controllers
 
         private bool BlogExists(int id)
         {
-            return _context.Blogs.Any(e => e.BlogId == id);
+            return _context.Blogs.Any(e => e.Id == id);
         }
     }
 }
