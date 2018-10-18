@@ -90,7 +90,7 @@ namespace AspNetCore.BestPractices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlogId,Url")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Url")] Blog blog)
         {
             if (id != blog.Id)
             {
