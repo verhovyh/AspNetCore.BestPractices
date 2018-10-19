@@ -9,6 +9,10 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
 {
     public class BloggingContext : DbContext
     {
+        public BloggingContext()
+        {
+
+        }
         public BloggingContext(DbContextOptions<BloggingContext> options)
             : base(options)
         { }

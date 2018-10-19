@@ -31,7 +31,7 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
 
         public virtual async Task<T> GetByIdAsync(int id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            return await _dbContext.Set<T>().FindAsync(id).ConfigureAwait(false);
         }
 
         public IEnumerable<T> ListAll()

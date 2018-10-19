@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AspNetCore.BestPractices.ApplicationCore.Entities.ValueObjects;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AspNetCore.BestPractices.ApplicationCore.Entities
@@ -7,9 +9,27 @@ namespace AspNetCore.BestPractices.ApplicationCore.Entities
     public class Blog : BaseEntity
     {
         public string Url { get; set; }
-        public string Author { get; set; }
+        public Name Author { get; set; }
 
-        public ICollection<Post> Posts { get; set; }
+        private readonly List<Post> _posts = new List<Post>();
+        public IReadOnlyCollection<Post> Posts => _posts.AsReadOnly();
+        public Blog()
+        {
+
+        }
+        public Blog(string url, Name author, List<Post> posts)
+        {
+            Url = url;
+            Author = author;
+            _posts = posts;
+        }
+        public void AddPost(int postId, string title, string content)
+        {
+            if (!Posts.Any(p => p.Id == postId))
+            {
+                _posts.Add(new Post() { Id = postId, Title = title, Content = content });
+            }
+        }
     }
 
     public class Post : BaseEntity

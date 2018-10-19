@@ -129,7 +129,7 @@ namespace AspNetCore.BestPractices.Controllers
             }
 
             var blog = await _context.Blogs
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (blog == null)
             {
                 return NotFound();
@@ -143,9 +143,9 @@ namespace AspNetCore.BestPractices.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var blog = await _context.Blogs.FindAsync(id);
+            var blog = await _context.Blogs.FindAsync(id).ConfigureAwait(false);
             _context.Blogs.Remove(blog);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             _logger.LogInformation("Log has been deleted..");
             return RedirectToAction(nameof(Index));
         }
