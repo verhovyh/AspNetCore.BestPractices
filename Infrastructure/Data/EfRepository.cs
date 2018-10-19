@@ -76,7 +76,7 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
             // return the result of the query using the specification's criteria expression
             return await secondaryResult
                             .Where(spec.Criteria)
-                            .ToListAsync();
+                            .ToListAsync().ConfigureAwait(false);
         }
 
         public T Add(T entity)
@@ -90,7 +90,7 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
         public async Task<T> AddAsync(T entity)
         {
             _dbContext.Set<T>().Add(entity);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             return entity;
         }
@@ -103,7 +103,7 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
         public async Task UpdateAsync(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Delete(T entity)
@@ -114,7 +114,7 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
         public async Task DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }
