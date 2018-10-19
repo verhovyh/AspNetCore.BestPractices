@@ -5,10 +5,11 @@ using UnitTests.Builders;
 using Xunit.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.Data.Sqlite;
 
 namespace IntegrationTests
 {
-    public class BlogRepositoryTests
+    public class BlogRepositoryTests : IDisposable
     {
 
         private readonly BloggingContext _bloggingContext;
@@ -16,15 +17,32 @@ namespace IntegrationTests
         private BlogBuilder BlogBuilder { get; } = new BlogBuilder();
         private readonly ITestOutputHelper _output;
 
+
+        public void Dispose()
+        {
+            _bloggingContext.Database.CloseConnection();
+        }
+
         public BlogRepositoryTests(ITestOutputHelper output)
         {
             _output = output;
+
+
+            var connection = new SqliteConnection("DataSource=:memory:");
+
             var dbOptions = new DbContextOptionsBuilder<BloggingContext>()
-                .UseInMemoryDatabase(databaseName: "TestCatalog")
+                .UseSqlite(connection)
                 .Options;
+
             _bloggingContext = new BloggingContext(dbOptions);
             _blogRepository = new BlogRepository(_bloggingContext);
+
+            _bloggingContext.Database.OpenConnection();
+            _bloggingContext.Database.EnsureCreated();
+
         }
+
+
 
         [Fact]
         public void GetExistingBlog()
@@ -45,6 +63,7 @@ namespace IntegrationTests
             Assert.Equal(blog.Posts.First(), receivedBlog.Posts.First());
 
         }
+
     }
 
 }
