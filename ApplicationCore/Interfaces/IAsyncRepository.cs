@@ -1,4 +1,5 @@
 ﻿using AspNetCore.BestPractices.ApplicationCore.Entities;
+using AspNetCore.BestPractices.ApplicationCore.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Text;

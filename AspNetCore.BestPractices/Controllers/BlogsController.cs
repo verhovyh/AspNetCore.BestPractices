@@ -26,7 +26,7 @@ namespace AspNetCore.BestPractices.Controllers
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Blogs.ToListAsync());
+            return View(await _context.Blogs.ToListAsync().ConfigureAwait(false));
         }
 
         // GET: Blogs/Details/5
@@ -38,7 +38,7 @@ namespace AspNetCore.BestPractices.Controllers
             }
 
             var blog = await _context.Blogs
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (blog == null)
             {
                 return NotFound();
@@ -63,7 +63,7 @@ namespace AspNetCore.BestPractices.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(blog);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return RedirectToAction(nameof(Index));
             }
             return View(blog);
@@ -77,7 +77,7 @@ namespace AspNetCore.BestPractices.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blogs.FindAsync(id);
+            var blog = await _context.Blogs.FindAsync(id).ConfigureAwait(false);
             if (blog == null)
             {
                 return NotFound();
@@ -102,7 +102,7 @@ namespace AspNetCore.BestPractices.Controllers
                 try
                 {
                     _context.Update(blog);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync().ConfigureAwait(false);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

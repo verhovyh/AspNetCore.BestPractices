@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AspNetCore.BestPractices.ApplicationCore.Entities
+namespace AspNetCore.BestPractices.ApplicationCore.SharedKernel
 {
 
     // This can easily be modified to be BaseEntity<T> and public T Id to support different key types.

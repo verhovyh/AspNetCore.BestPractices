@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AspNetCore.BestPractices.ApplicationCore.Entities;
+using AspNetCore.BestPractices.ApplicationCore.SharedKernel;
 
 namespace AspNetCore.BestPractices.ApplicationCore.Interfaces
 {
