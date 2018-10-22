@@ -1,5 +1,6 @@
 ﻿using AspNetCore.BestPractices.ApplicationCore.Entities;
 using AspNetCore.BestPractices.ApplicationCore.Interfaces;
+using AspNetCore.BestPractices.ApplicationCore.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
 
         public async Task<List<T>> ListAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await _dbContext.Set<T>().ToListAsync().ConfigureAwait(false);
         }
 
         public IEnumerable<T> List(ISpecification<T> spec)

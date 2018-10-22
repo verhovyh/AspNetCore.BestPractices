@@ -1,4 +1,5 @@
 ﻿using AspNetCore.BestPractices.ApplicationCore.Entities.ValueObjects;
+using AspNetCore.BestPractices.ApplicationCore.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,7 @@ namespace AspNetCore.BestPractices.ApplicationCore.Entities
 
         private readonly List<Post> _posts = new List<Post>();
         public IReadOnlyCollection<Post> Posts => _posts.AsReadOnly();
-        public Blog()
-        {
-
-        }
+        public Blog() { }
         public Blog(string url, Name author, List<Post> posts)
         {
             Url = url;

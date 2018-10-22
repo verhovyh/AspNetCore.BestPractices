@@ -1,4 +1,5 @@
 ﻿using AspNetCore.BestPractices.ApplicationCore.Entities;
+using AspNetCore.BestPractices.ApplicationCore.Entities.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -25,8 +26,9 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PostTag>(ConfigurePostTag);
+            modelBuilder.Entity<Blog>(ConfigureBlog);
         }
-
+              
         private void ConfigurePostTag(EntityTypeBuilder<PostTag> entity)
         {
             entity.HasKey(e => new { e.PostId, e.TagId });
@@ -38,6 +40,11 @@ namespace AspNetCore.BestPractices.Infrastructure.Data
             entity.HasOne(pt => pt.Tag)
                 .WithMany(p => p.PostTags)
                 .HasForeignKey(pt => pt.TagId);
+        }
+
+        private void ConfigureBlog(EntityTypeBuilder<Blog> entity)
+        {
+            entity.OwnsOne(o => o.Author);
         }
     }
 }
