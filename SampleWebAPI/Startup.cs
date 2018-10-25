@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using AspNetCore.BestPractices.ApplicationCore.Interfaces;
 using AspNetCore.BestPractices.Infrastructure.Logging;
 using AspNetCore.BestPractices.Infrastructure.Data;
+using System.IO;
+
 namespace SampleWebAPI
 {
     public class Startup
@@ -34,7 +36,6 @@ namespace SampleWebAPI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<BloggingContext>(options =>
@@ -46,9 +47,21 @@ namespace SampleWebAPI
                 }
             });
 
+            services.AddSwaggerGen(options =>
+            {
+                options.DescribeAllEnumsAsStrings();
+                
+                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                {
+                    Title = Configuration["App:Title"],
+                    Version = Configuration["App:Version"],
+                    Description = Configuration["App:Description"],
+                    TermsOfService = Configuration["App:TermsOfService"]
+                });
+            });
+
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +86,12 @@ namespace SampleWebAPI
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }
