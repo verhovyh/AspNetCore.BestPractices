@@ -21,9 +21,9 @@ namespace SampleWebAPI.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Blog>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _blogRepository.ListAll().ToList();
         }
 
         // GET api/values/5
