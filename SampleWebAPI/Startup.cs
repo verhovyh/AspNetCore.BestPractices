@@ -62,6 +62,8 @@ namespace SampleWebAPI
 
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IBlogRepository), typeof(BlogRepository));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

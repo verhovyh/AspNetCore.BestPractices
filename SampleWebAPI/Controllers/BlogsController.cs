@@ -13,8 +13,8 @@ namespace SampleWebAPI.Controllers
     [ApiController]
     public class BlogsController : ControllerBase
     {
-        private readonly IRepository<Blog> _blogRepository;
-        public BlogsController(IRepository<Blog> blogRepository)
+        private readonly IBlogRepository _blogRepository;
+        public BlogsController(IBlogRepository blogRepository)
         {
             _blogRepository = blogRepository;
         }
